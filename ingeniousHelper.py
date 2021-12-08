@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sun Jun  2 09:56:13 2019
-
-@author: Will
+@author: WSJHawkins
 """
 
 def numToColour(x):
@@ -90,8 +88,6 @@ def fillTileBag():
                     tileBag.append([i,j])
     return tileBag
 
-
-            
 def printTileRack(tileRack):
     print(tileRack[0][0],"  ",tileRack[1][0],"  ",tileRack[2][0],"  ",tileRack[3][0],"  ",tileRack[4][0],"  ",tileRack[5][0])
     print(tileRack[0][1],"  ",tileRack[1][1],"  ",tileRack[2][1],"  ",tileRack[3][1],"  ",tileRack[4][1],"  ",tileRack[5][1])
@@ -178,8 +174,7 @@ def incrementScore(score,tileNum):
         score[0] = score[0] + 1
         score[1][tileNum] = score[1][tileNum] + 1
     return score
-    
-    
+
 def scoreLine(board,location,n,score):
     if(location[0] == n[0]):
         #going side to side
@@ -213,9 +208,7 @@ def scoreLine(board,location,n,score):
                 score = scoreLine(board,location,n,score)
         
     return score
-    
-    
-    
+
 def scoreMove(location,position,tile,board,scoreBoard):
     total = 0
     for score in scoreBoard:
@@ -383,7 +376,3 @@ def playTurnHuman(board,scoreBoard,otherScoreBoard,tileRack,tileBag,turnNo,numOf
         tileRack,tileBag = refreshTileRack(tileRack,tileBag)   
     
     return board,scoreBoard,tileRack,tileBag,gameOver,anotherGo
-
-
-
-
