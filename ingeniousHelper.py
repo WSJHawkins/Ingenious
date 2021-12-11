@@ -9,6 +9,7 @@ import colorama
 import numpy as np
 from numpy.random import randint
 
+
 def numToColour(x):
     returnVal = ""
     if x == 1:
@@ -134,6 +135,7 @@ def printGameState(board, tileRack, scoreBoard, method):
 
 
 def availablePlaces(j, i, board):
+    placeList = []
     if j < 7:
         placeList = [[j + 1, i + 1], [j, i + 1], [j + 1, i], [j - 1, i], [j, i - 1], [j - 1, i - 1]]
     elif j == 7:
@@ -144,13 +146,14 @@ def availablePlaces(j, i, board):
         placeList = []
     placeList2 = []
     for x in placeList:
-        if x[0] >= 0 and x[1] >= 0 and x[0] < 15 and x[1] < 15:
+        if 15 > x[0] >= 0 >= 0 and x[1] < 15:
             if board[x[0]][x[1]] == 0:
                 placeList2.append(x)
     return placeList2
 
 
 def nextDoorPieces(j, i, board):
+    placeList = []
     if j < 7:
         placeList = [[j + 1, i + 1], [j, i + 1], [j + 1, i], [j - 1, i], [j, i - 1], [j - 1, i - 1]]
     elif j == 7:
@@ -161,7 +164,7 @@ def nextDoorPieces(j, i, board):
         placeList = []
     placeList2 = []
     for x in placeList:
-        if x[0] >= 0 and x[1] >= 0 and x[0] < 15 and x[1] < 15:
+        if 0 <= x[0] < 15 and 0 <= x[1] < 15:
             if board[x[0]][x[1]] > 0:
                 placeList2.append(x)
     return placeList2
@@ -189,7 +192,7 @@ def refreshTileRack(tileRack, tileBag):
 def incrementScore(score, tileNum):
     if score[1][tileNum] < 18:
         score[0] = score[0] + 1
-        score[1][tileNum] = score[1][tileNum] + 1
+        score[1][tileNum] += 1
     return score
 
 
@@ -202,9 +205,6 @@ def scoreLine(board, location, n, score):
         if 0 <= n[0] < 15 and 0 <= n[1] < 15:
             if board[location[0]][location[1]] == board[n[0]][n[1]]:
                 score = incrementScore(score, board[n[0]][n[1]] - 1)
-                # TODO why is this commented
-                #                score[0] = score[0] + 1
-                #                score[1][board[n[0]][n[1]]-1] = score[1][board[n[0]][n[1]]-1] + 1
                 score = scoreLine(board, location, n, score)
     else:
         # diaganol
@@ -222,9 +222,6 @@ def scoreLine(board, location, n, score):
         if 0 <= n[0] < 15 and 0 <= n[1] < 15:
             if board[location[0]][location[1]] == board[n[0]][n[1]]:
                 score = incrementScore(score, board[n[0]][n[1]] - 1)
-                # TODO why is this commented
-                #                score[0] = score[0] + 1
-                #                score[1][board[n[0]][n[1]]-1] = score[1][board[n[0]][n[1]]-1] + 1
                 score = scoreLine(board, location, n, score)
 
     return score
@@ -240,9 +237,6 @@ def scoreMove(location, position, tile, board, scoreBoard):
         if n[0] != position[0] or n[1] != position[1]:
             if tile[0] == board[n[0]][n[1]]:
                 score = incrementScore(score, tile[0] - 1)
-                # TODO why is this commented
-                #                score[0] = score[0]+1
-                #                score[1][tile[0]-1] = score[1][tile[0]-1] + 1
                 # then look at line
                 score = scoreLine(board, location[:], n[:], score[:])
 
@@ -250,9 +244,6 @@ def scoreMove(location, position, tile, board, scoreBoard):
         if n[0] != location[0] or n[1] != location[1]:
             if tile[1] == board[n[0]][n[1]]:
                 score = incrementScore(score, tile[1] - 1)
-                # TODO why is this commented
-                #                score[0] = score[0] + 1
-                #                score[1][tile[1]-1] = score[1][tile[1]-1] + 1
                 # then look at line
                 score = scoreLine(board, position[:], n[:], score[:])
     return score
